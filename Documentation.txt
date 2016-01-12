@@ -1,0 +1,13 @@
+Solution:       The Interview
+Author:         John E Velis
+Created:        1/5/2016
+Last Modified:  1/5/2016
+
+Project:        D1
+Description:    Create the Player class
+				Include the Console Display Utilities for the header and footer
+				Add methods DisplayWelcomeScreen, DisplayClosingScreen, DisplayGetInitialInfo, 
+					DisplayGetPlayersRace, DisplayGetPlayersAge, DisplaySummary
+
+Project:        D2
+Description:    Add

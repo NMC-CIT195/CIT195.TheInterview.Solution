@@ -14,7 +14,7 @@ namespace CIT195.TheInterview.Solution
     class Program
     {
         /// <summary>
-        /// Control method for the application
+        /// Control method for the application flow
         /// </summary>
         /// <param name="args"></param>
         static void Main(string[] args)
@@ -29,12 +29,12 @@ namespace CIT195.TheInterview.Solution
             DisplayWelcomeScreen();
 
             DisplayGetInitialInfo(_myPlayer);
-            GetPlayersRace(_myPlayer);
-            GetPlayersAge(_myPlayer);
+            DisplayGetPlayersRace(_myPlayer);
+            DisplayGetPlayersAge(_myPlayer);
 
-            //DisplaySummary(_myPlayer);
+            DisplaySummary(_myPlayer);
 
-            Console.ReadLine();
+            DisplayClosingScreen(_myPlayer);
         }
 
         #region CONSOLE DISPLAY UTILITIES
@@ -55,6 +55,11 @@ namespace CIT195.TheInterview.Solution
         {
             Console.Clear();
 
+            //
+            // turn the flashing cursor on
+            //
+            Console.CursorVisible = true;
+
             Console.ForegroundColor = ConsoleColor.Red;
             Console.BackgroundColor = ConsoleColor.White;
 
@@ -68,10 +73,15 @@ namespace CIT195.TheInterview.Solution
         }
 
         /// <summary>
-        /// Display the return prompt on the console
+        /// Display the return prompt
         /// </summary>
         private static void DisplayReturnPrompt()
         {
+            //
+            // turn the flashing cursor off
+            //
+            Console.CursorVisible = false;
+
             Console.WriteLine();
 
             Console.ForegroundColor = ConsoleColor.Red;
@@ -89,7 +99,7 @@ namespace CIT195.TheInterview.Solution
         #endregion
 
         /// 
-        /// Display the opening screen on the console
+        /// Display the opening screen
         /// </summary>
         private static void DisplayWelcomeScreen()
         {
@@ -197,7 +207,7 @@ namespace CIT195.TheInterview.Solution
         /// <summary>
         /// Acquire player's race from enum options
         /// </summary>
-        private static void GetPlayersRace(Player myPlayer)
+        private static void DisplayGetPlayersRace(Player myPlayer)
         {
             string playerResponse;
 
@@ -206,6 +216,9 @@ namespace CIT195.TheInterview.Solution
             Console.WriteLine(" Please enter one of the following races. ");
             Console.WriteLine();
 
+            //
+            // generate a list of race type names for user to choose from
+            //
             foreach (string raceType in Enum.GetNames(typeof(Player.GalacticRace)))
             {
                 Console.WriteLine(" " + raceType);
@@ -224,7 +237,7 @@ namespace CIT195.TheInterview.Solution
         /// <summary>
         /// Acquire player's age in years
         /// </summary>
-        private static void GetPlayersAge(Player myPlayer)
+        private static void DisplayGetPlayersAge(Player myPlayer)
         {
             DisplayNewScreenHeader();
 
@@ -235,6 +248,52 @@ namespace CIT195.TheInterview.Solution
             {
                 Console.WriteLine(" You are either in really good shape or are an Tradaian.");
             }
+
+            DisplayReturnPrompt();
+        }
+
+
+        /// <summary>
+        /// Display a summary of the processing
+        /// </summary>
+        private static void DisplaySummary(Player myPlayer)
+        {
+            DisplayNewScreenHeader();
+
+            Console.WriteLine();
+            Console.WriteLine("We have the following information for you {0} {1}.", myPlayer.Rank , myPlayer.Name);
+            Console.WriteLine();
+
+            Console.Write(" Status       : ");
+            if (myPlayer.Rookie)
+            {
+                Console.WriteLine("Rookie");
+            }
+            else
+            {
+                Console.WriteLine("Veteran");
+            }
+
+            Console.WriteLine(" Galactic Race: {0}", myPlayer.Race);
+            Console.WriteLine(" Age          : {0}", myPlayer.Age);
+
+            DisplayReturnPrompt();
+        }
+
+        /// <summary>
+        /// Display the Closing screen
+        /// </summary>
+        private static void DisplayClosingScreen(Player myPlayer)
+        {
+            DisplayNewScreenHeader();
+
+            Console.WriteLine(" Well {0} {1} it appears we are done here.", myPlayer.Rank, myPlayer.Name);
+            Console.WriteLine();
+
+            Console.WriteLine(myPlayer.InitialOrders());
+            Console.WriteLine();
+
+            Console.WriteLine(" Good Luck!");
 
             DisplayReturnPrompt();
         }

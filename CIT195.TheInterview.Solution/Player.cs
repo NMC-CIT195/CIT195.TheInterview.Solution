@@ -103,11 +103,11 @@ namespace CIT195.TheInterview.Solution
         {
             if (_rookie)
             {
-                return "As a rookie, you will be required to attend the Army of the Republic's boot camp.";
+                return " As a rookie, you will be required to attend the \n Army of the Republic's boot camp.";
             }
             else
             {
-                return "As a veteran, you will be immediately assigned to the Cantor Regiment on the Front.";
+                return " As a veteran, you will be immediately assigned to \n the Cantor Regiment on the Front.";
             }
         }
 
