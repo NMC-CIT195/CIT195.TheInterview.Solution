@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace CIT195.TheInterview.Solution
 {
+    /// <summary>
+    /// Player class for game
+    /// </summary>
     public class Player
     {
         #region ENUMERABLES
@@ -19,6 +22,16 @@ namespace CIT195.TheInterview.Solution
             Unknown
         };
 
+        public enum ServiceRank
+        {
+            Private,
+            Sargent,
+            Lieutenant,
+            Captain,
+            Major,
+            Colonel,
+            General
+        }
 
         #endregion
 
@@ -28,28 +41,13 @@ namespace CIT195.TheInterview.Solution
         private string _name;
         private int _age;
         private GalacticRace _race;
-        private bool _feelingPositive;
-        private string _positiveGreeting;
-        private string _negativeGreeting;   
+        private ServiceRank _rank;
+        private bool _rookie;
 
         #endregion
 
 
         #region PROPERTIES
-
-        public GalacticRace Race
-        {
-            get { return _race; }
-            set { _race = value; }
-        }
-        
-
-        public int Age
-        {
-            get { return _age; }
-            set { _age = value; }
-        }
-        
 
         public string Name
         {
@@ -57,21 +55,28 @@ namespace CIT195.TheInterview.Solution
             set { _name = value; }
         }
 
-        public bool FeelingPositive
+        public int Age
         {
-            get { return _feelingPositive; }
-            set { _feelingPositive = value; }
+            get { return _age; }
+            set { _age = value; }
         }
 
-        public string PositiveGreeting
+        public GalacticRace Race
         {
-            get { return _positiveGreeting; }
-            set { _positiveGreeting = value; }
+            get { return _race; }
+            set { _race = value; }
         }
-        public string NegativeGreeting
+
+        public ServiceRank Rank
         {
-            get { return _negativeGreeting; }
-            set { _negativeGreeting = value; }
+            get { return _rank; }
+            set { _rank = value; }
+        }
+
+        public bool Rookie
+        {
+            get { return _rookie; }
+            set { _rookie = value; }
         }
 
         #endregion
@@ -94,19 +99,19 @@ namespace CIT195.TheInterview.Solution
 
         #region METHODS
 
-        public string Greeting()
+        public string InitialOrders()
         {
-            if (_feelingPositive)
+            if (_rookie)
             {
-                return _positiveGreeting;
+                return "As a rookie, you will be required to attend the Army of the Republic's boot camp.";
             }
             else
             {
-                return _negativeGreeting;
+                return "As a veteran, you will be immediately assigned to the Cantor Regiment on the Front.";
             }
         }
 
         #endregion
-                       
+
     }
 }
