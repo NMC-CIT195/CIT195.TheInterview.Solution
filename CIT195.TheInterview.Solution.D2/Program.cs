@@ -121,10 +121,11 @@ namespace CIT195.TheInterview.Solution
         /// </summary>
         private static void DisplayGetInitialInfo(Player myPlayer)
         {
+            bool validResponse = false;
             string playerResponse;
 
             DisplayNewScreenHeader();
-            
+
             Console.WriteLine();
             Console.Write(" Please enter your name: ");
             myPlayer.Name = Console.ReadLine();
@@ -133,21 +134,33 @@ namespace CIT195.TheInterview.Solution
             Console.WriteLine(" Private, Sargent, Lieutenant, Captain, Major, Colonel, General");
             Console.Write(" Please enter your rank: ");
             Player.ServiceRank rank;
-            Enum.TryParse(Console.ReadLine(), out rank);
-            myPlayer.Rank = rank;
+
+            //
+            // validate player's choice of rank against the enum
+            //
+            playerResponse = Console.ReadLine();
+            while (!validResponse)
+            {
+                if (Enum.TryParse(playerResponse, out rank))
+                {
+                    myPlayer.Rank = rank;
+                    validResponse = true;
+                }
+                else
+                {
+                    Console.WriteLine();
+                    Console.WriteLine(" It appears you have not entered a valid rank.");
+                    Console.WriteLine(" Please enter one of the ranks below exactly as it appears.");
+                    Console.WriteLine(" Private, Sargent, Lieutenant, Captain, Major, Colonel, General");
+                    Console.Write(" Please enter your rank: ");
+                    playerResponse = Console.ReadLine();
+                    Console.WriteLine();
+                }
+            }
 
             Console.WriteLine();
             Console.Write(" Is this your first mission? (YES or NO): ");
 
-            playerResponse = Console.ReadLine().Trim().ToUpper();
-            if (playerResponse == "YES")
-            {
-                myPlayer.Rookie = true;
-            }
-            else
-            {
-                myPlayer.Rookie = false;
-            }
 
             Console.WriteLine();
             Console.WriteLine(" Welcome {0} {1}.", myPlayer.Rank, myPlayer.Name);
@@ -163,6 +176,79 @@ namespace CIT195.TheInterview.Solution
 
             DisplayReturnPrompt();
         }
+
+        public bool ValidYesRepsonse()
+        {
+            string playerResponse;
+            bool validRepsonse = false;
+            bool yesResponse = false;
+
+            while (!validRepsonse)
+            {
+                playerResponse = Console.ReadLine().Trim().ToUpper();
+
+                if (playerResponse == "YES")
+                {
+                    yesResponse = true;
+                }
+                else if (playerResponse == "NO")
+                {
+                    yesResponse = false;
+                }
+                else
+                {
+                    Console.WriteLine();
+                    Console.WriteLine(" It appears you have not entered a valid response.");
+                    Console.WriteLine(" Please enter either YES or NO:");
+                    playerResponse = Console.ReadLine();
+                    Console.WriteLine();
+                }
+            }
+
+            return yesResponse;
+        }
+
+        /// <summary>
+        /// Display a summary of the processing
+        /// </summary>
+        //private static void DisplaySummary(Player myPlayer)
+        //{
+        //    DisplayNewScreenHeader();
+
+        //    Console.WriteLine(" Name         : {0} {1} {2}", rank, firstName, lastName);
+        //    Console.WriteLine();
+
+        //    Console.Write(" Status       : ");
+        //    if (rookie)
+        //    {
+        //        Console.WriteLine("Rookie");
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("Veteran");
+        //    }
+
+        //    Console.WriteLine(" Galactic Race: {0}", race);
+        //    Console.WriteLine(" Age          : {0}", age);
+
+        //    string weaponsList = "";
+        //    if (playersNumWeapons != 0)
+        //    {
+        //        for (int weaponCount = 0; weaponCount <= MAX_NUM_WEAPONS - 1; weaponCount++)
+        //        {
+        //            weaponsList = weaponsList + weapons[weaponCount];
+        //            if (weaponCount != MAX_NUM_WEAPONS - 1)
+        //            {
+        //                weaponsList = weaponsList + "     ";
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        weaponsList = "None";
+        //    }
+        //    Console.WriteLine(" Weapons      : {0}", weaponsList);
+        //}
 
         /// <summary>
         /// Acquire player's race from enum options
@@ -212,6 +298,7 @@ namespace CIT195.TheInterview.Solution
             DisplayReturnPrompt();
         }
 
+
         /// <summary>
         /// Display a summary of the processing
         /// </summary>
@@ -256,5 +343,50 @@ namespace CIT195.TheInterview.Solution
 
             DisplayReturnPrompt();
         }
+
+        /// <summary>
+        /// Acquire the player's weapon types
+        /// </summary>
+        //private static void GetPlayersWeapons()
+        //{
+        //    playersNumWeapons = -1;
+
+        //    while (playersNumWeapons < 0 || playersNumWeapons > 3)
+        //    {
+        //        DisplayNewScreenHeader();
+
+        //        Console.WriteLine(" You are allowed a maximum of three weapons on this mission. ");
+        //        Console.WriteLine();
+        //        Console.Write(" Please state the number of weapons you would like to carry: ");
+        //        playersNumWeapons = int.Parse(Console.ReadLine());
+        //    }
+
+        //    if (playersNumWeapons == 0)
+        //    {
+        //        Console.WriteLine();
+        //        Console.WriteLine(" No, weapons eh!? What, are you Chuck Norris or something?");
+        //    }
+        //    else
+        //    {
+        //        for (int weapon = 0; weapon <= playersNumWeapons - 1; weapon++)
+        //        {
+        //            Console.WriteLine();
+        //            Console.Write(" Enter the name of weapon {0}: ", weapon + 1);
+        //            weapons[weapon] = Console.ReadLine();
+        //        }
+
+        //        Console.WriteLine();
+        //        Console.WriteLine(" You will be issued the following weapons:");
+        //        for (int weapon = 0; weapon <= playersNumWeapons - 1; weapon++)
+        //        {
+        //            Console.Write(" [{0}] ", weapons[weapon]);
+        //        }
+        //        Console.WriteLine();
+        //    }
+
+        //    DisplayReturnPrompt();
+        //}
+
+
     }
 }
