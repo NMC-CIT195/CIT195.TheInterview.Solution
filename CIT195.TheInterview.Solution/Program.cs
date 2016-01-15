@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace CIT195.TheInterview.Solution
 {
 
@@ -114,8 +113,7 @@ namespace CIT195.TheInterview.Solution
 
             DisplayReturnPrompt();
         }
-
-
+        
         /// 
         /// Get the initial information from the player
         /// </summary>

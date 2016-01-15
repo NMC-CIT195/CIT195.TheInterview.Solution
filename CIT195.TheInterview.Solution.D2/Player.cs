@@ -99,6 +99,10 @@ namespace CIT195.TheInterview.Solution
 
         #region METHODS
 
+        /// <summary>
+        /// Determine the players initial orders once deployed
+        /// </summary>
+        /// <returns>string of new orders</returns>
         public string InitialOrders()
         {
             if (_rookie)

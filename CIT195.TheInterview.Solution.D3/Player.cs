@@ -35,16 +35,21 @@ namespace CIT195.TheInterview.Solution
 
         #endregion
 
+
         #region FIELDS
+        public const int MAX_NUMBER_OF_WEAPONS = 3;
 
         private string _name;
         private int _age;
         private GalacticRace _race;
         private ServiceRank _rank;
         private bool _rookie;
+        private string[] _weapons;
+        private List<string> _backpack;
 
         #endregion
-        
+
+
         #region PROPERTIES
 
         public string Name
@@ -77,7 +82,20 @@ namespace CIT195.TheInterview.Solution
             set { _rookie = value; }
         }
 
+        public string[] Weapons
+        {
+            get { return _weapons; }
+            set { _weapons = value; }
+        }
+
+        public List<string> Backpack
+        {
+            get { return _backpack; }
+            set { _backpack = value; }
+        }
+
         #endregion
+
 
         #region CONSTRUCTORS
 
@@ -92,9 +110,24 @@ namespace CIT195.TheInterview.Solution
         }
 
         #endregion
-        
+
+
         #region METHODS
 
+        /// <summary>
+        /// Initialize the player at the start of the game
+        /// </summary>
+        public void InitializePlayer()
+        {
+            _weapons = new string[MAX_NUMBER_OF_WEAPONS];
+            _backpack = new List<string>();
+        }
+
+
+        /// <summary>
+        /// Determine the players initial orders once deployed
+        /// </summary>
+        /// <returns>string of new orders</returns>
         public string InitialOrders()
         {
             if (_rookie)

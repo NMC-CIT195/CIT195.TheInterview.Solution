@@ -23,6 +23,7 @@ namespace CIT195.TheInterview.Solution
             // instantiate (create) a player object
             //
             Player _myPlayer = new Player();
+            _myPlayer.InitializePlayer();
 
             InitializeConsoleWindow();
 
@@ -31,6 +32,8 @@ namespace CIT195.TheInterview.Solution
             DisplayGetInitialInfo(_myPlayer);
             DisplayGetPlayersRace(_myPlayer);
             DisplayGetPlayersAge(_myPlayer);
+            DisplayGetPlayersWeapons(_myPlayer);
+            DisplayGetPlayerBackpackItems(_myPlayer);
 
             DisplaySummary(_myPlayer);
 
@@ -103,8 +106,8 @@ namespace CIT195.TheInterview.Solution
         /// <summary>
         /// Get and validate the player response as a either a Yes or No value
         /// </summary>
-        /// <returns>true equals yes</returns>
-        public static bool GetYesNoResponse()
+        /// <returns>bool where yes equals true</returns>
+        public static bool GetYesNoFromConsole()
         {
             string playerResponse;
             bool validRepsonse = false;
@@ -124,6 +127,7 @@ namespace CIT195.TheInterview.Solution
                     yesResponse = false;
                     validRepsonse = true;
                 }
+                // user response not a yes or no
                 else
                 {
                     Console.WriteLine();
@@ -133,6 +137,42 @@ namespace CIT195.TheInterview.Solution
             }
 
             return yesResponse;
+        }
+
+        /// <summary>
+        /// Get validated integer based on a minimum and maximum value
+        /// </summary>
+        /// <param name="inputName">the text describing the desired input</param>
+        /// <param name="minNumber">minimum value of input</param>
+        /// <param name="maxNumber">maximum value of input</param>
+        /// <returns>validated integer</returns>
+        private static int GetIntegerFromConsole(string inputName, int minNumber, int maxNumber)
+        {
+            int userInteger = 0;
+            string userResponse;
+            bool validResponse = false;
+
+            while (!validResponse)
+            {
+                userResponse = Console.ReadLine();
+
+                if ((Int32.TryParse(userResponse, out userInteger)) && ((userInteger <= maxNumber) && (userInteger >= minNumber)))
+                {
+                    //
+                    // User integer validated and stored in userInteger
+                    //
+                    validResponse = true;
+                }
+                // user input not an integer or out of range
+                else
+                {
+                    Console.WriteLine();
+                    Console.WriteLine(" It appears you have entered an invalid {0}.", inputName);
+                    Console.Write(" Please enter your {0} using a value between {1} and {2}.", inputName, minNumber, maxNumber);
+                }
+            }
+
+            return userInteger;
         }
 
         #endregion
@@ -193,7 +233,6 @@ namespace CIT195.TheInterview.Solution
                     Console.WriteLine();
                     Console.WriteLine(" It appears you have not entered a valid rank.");
                     Console.WriteLine(" Please enter one of the ranks below exactly as it appears.");
-                    Console.WriteLine();
                     Console.WriteLine(" Private, Sargent, Lieutenant, Captain, Major, Colonel, General");
                     Console.WriteLine();
                     Console.Write(" Please enter your rank: ");
@@ -207,7 +246,7 @@ namespace CIT195.TheInterview.Solution
             //
             // GetYesNoFromConsole() returns a bool where yes equal true
             //
-            myPlayer.Rookie = GetYesNoResponse();
+            myPlayer.Rookie = GetYesNoFromConsole();
 
             Console.WriteLine();
             Console.WriteLine(" Welcome {0} {1}.", myPlayer.Rank, myPlayer.Name);
@@ -223,7 +262,7 @@ namespace CIT195.TheInterview.Solution
 
             DisplayReturnPrompt();
         }
-
+ 
         /// <summary>
         /// Acquire player's race from enum options
         /// </summary>
@@ -291,32 +330,11 @@ namespace CIT195.TheInterview.Solution
         /// <param name="myPlayer">player object</param>
         private static void DisplayGetPlayersAge(Player myPlayer)
         {
-            string playerResponse;
-            bool validResponse = false;
-            int age;
-
             DisplayNewScreenHeader();
 
             Console.Write(" Please enter your age: ");
 
-            //
-            // Validate the player's response for age
-            while (!validResponse)
-            {
-                playerResponse = Console.ReadLine();
-
-                if ((Int32.TryParse(playerResponse, out age)) && ((age <= 200) && (age >= 21)))
-                {
-                    myPlayer.Age = age;
-                    validResponse = true;
-                }
-                else
-                {
-                    Console.WriteLine();
-                    Console.WriteLine(" It appears you have not entered an invalid age.");
-                    Console.Write(" Please enter your age in years using a value between 21 and 200.");
-                }
-            }
+            myPlayer.Age = GetIntegerFromConsole("age", 0, 200);
 
             if (myPlayer.Age > 80)
             {
@@ -327,6 +345,60 @@ namespace CIT195.TheInterview.Solution
             DisplayReturnPrompt();
         }
 
+        /// <summary>
+        /// Acquire the player's weapon types
+        /// </summary>
+        /// <param name="myPlayer">player object</param>
+        private static void DisplayGetPlayersWeapons(Player myPlayer)
+        {
+            int playersNumWeapons = -1;
+
+            DisplayNewScreenHeader();
+
+            Console.WriteLine(" You are allowed a maximum of three weapons on this mission. ");
+            Console.WriteLine();
+            Console.Write(" Please state the number of weapons you would like to carry: ");
+            playersNumWeapons = GetIntegerFromConsole("number of weapons", 0, 3);
+
+
+            if (playersNumWeapons == 0)
+            {
+                Console.WriteLine();
+                Console.WriteLine(" No, weapons eh!? What, are you Chuck Norris or something?");
+            }
+            else
+            {
+                for (int weapon = 0; weapon <= playersNumWeapons - 1; weapon++)
+                {
+                    Console.WriteLine();
+                    Console.Write(" Enter the name of weapon {0}: ", weapon + 1);
+                    myPlayer.Weapons[weapon] = Console.ReadLine();
+                }
+
+                Console.WriteLine();
+                Console.WriteLine(" You will be issued the following weapons:");
+                for (int weapon = 0; weapon <= playersNumWeapons - 1; weapon++)
+                {
+                    Console.Write(" [{0}] ", myPlayer.Weapons[weapon]);
+                }
+                Console.WriteLine();
+            }
+
+            DisplayReturnPrompt();
+        }
+
+        private static void DisplayGetPlayerBackpackItems(Player myPlayer)
+        {
+            DisplayNewScreenHeader();
+
+            Console.WriteLine(" You are allowed some personal items in your backpack.");
+            Console.WriteLine(" Please enter items one at a time when prompted.");
+            Console.WriteLine(" Enter 'Done' when your are finished adding items.");
+
+
+
+            DisplayReturnPrompt();
+        }
 
         /// <summary>
         /// Display a summary of the processing
@@ -334,6 +406,8 @@ namespace CIT195.TheInterview.Solution
         /// <param name="myPlayer">player object</param>
         private static void DisplaySummary(Player myPlayer)
         {
+            string weaponsList = "";
+
             DisplayNewScreenHeader();
 
             Console.WriteLine();
@@ -352,6 +426,26 @@ namespace CIT195.TheInterview.Solution
 
             Console.WriteLine(" Galactic Race: {0}", myPlayer.Race);
             Console.WriteLine(" Age          : {0}", myPlayer.Age);
+
+            //
+            // Build out and display weapons list
+            //
+            if (myPlayer.Weapons != null)
+            {
+                for (int weaponCount = 0; weaponCount <= Player.MAX_NUMBER_OF_WEAPONS - 1; weaponCount++)
+                {
+                    weaponsList = weaponsList + myPlayer.Weapons[weaponCount];
+                    if (weaponCount != Player.MAX_NUMBER_OF_WEAPONS - 1)
+                    {
+                        weaponsList = weaponsList + "     ";
+                    }
+                }
+            }
+            else
+            {
+                weaponsList = "None";
+            }
+            Console.WriteLine(" Weapons      : {0}", weaponsList);
 
             DisplayReturnPrompt();
         }
