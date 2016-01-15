@@ -262,7 +262,7 @@ namespace CIT195.TheInterview.Solution
 
             DisplayReturnPrompt();
         }
- 
+
         /// <summary>
         /// Acquire player's race from enum options
         /// </summary>
@@ -389,13 +389,54 @@ namespace CIT195.TheInterview.Solution
 
         private static void DisplayGetPlayerBackpackItems(Player myPlayer)
         {
+            bool done = false;
+            string userResponse;
+
             DisplayNewScreenHeader();
 
             Console.WriteLine(" You are allowed some personal items in your backpack.");
             Console.WriteLine(" Please enter items one at a time when prompted.");
             Console.WriteLine(" Enter 'Done' when your are finished adding items.");
+            Console.WriteLine();
 
+            //
+            // Add items to the backpack
+            //
+            while (!done)
+            {
+                Console.Write(" Please enter an item:");
+                userResponse = Console.ReadLine();
 
+                if (userResponse.ToUpper() != "DONE")
+                {
+                    myPlayer.Backpack.Add(userResponse);
+                }
+                // user is finished entering items for the backpack
+                else
+                {
+                    done = true;
+                }
+            }
+
+            Console.WriteLine();
+
+            //
+            // list the items in the backpack
+            //
+            if (myPlayer.Backpack.Count != 0)
+            {
+                Console.WriteLine(" You have entered the following items in your backpack.");
+
+                foreach (string item in myPlayer.Backpack)
+                {
+                    Console.WriteLine(" Item: {0}", item);
+                }
+            }
+            // no items in the backpack
+            else
+            {
+                Console.WriteLine(" It appears you like to travel light.");
+            }
 
             DisplayReturnPrompt();
         }
@@ -407,6 +448,7 @@ namespace CIT195.TheInterview.Solution
         private static void DisplaySummary(Player myPlayer)
         {
             string weaponsList = "";
+            string backpackList = "";
 
             DisplayNewScreenHeader();
 
@@ -446,6 +488,23 @@ namespace CIT195.TheInterview.Solution
                 weaponsList = "None";
             }
             Console.WriteLine(" Weapons      : {0}", weaponsList);
+
+            //
+            // build out and display the backpack list
+            //
+            if (myPlayer.Backpack.Count != 0)
+            {
+                foreach (string item in myPlayer.Backpack)
+                {
+                    backpackList += item + " ";
+                }
+            }
+            // backpack empty
+            else
+            {
+                backpackList = "Empty";
+            }
+            Console.WriteLine(" Backpack     : {0}", backpackList);
 
             DisplayReturnPrompt();
         }

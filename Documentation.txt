@@ -10,4 +10,12 @@ Description:    Create the Player class
 					DisplayGetPlayersRace, DisplayGetPlayersAge, DisplaySummary
 
 Project:        D2
-Description:    Add
+Description:    Include Console Helper Utilities: GetYesNoResponse
+				Validate all user inputs
+				
+Project:        D3
+Description:    Include Console Helper Utilities: GetIntegerFromConsole
+				Add to Player class the weapons array and the backpack item list
+				Add methods DisplayGetPlayersWeapons and DisplayGetPlayerBackpackItems
+				Update DisplaySummary method to include weapons and backpack items
+				Refactor user integer input into the GetIntegerFromConsole method
