@@ -22,5 +22,5 @@ Description:    Include Console Helper Utilities: GetIntegerFromConsole
 
 Project:        D4
 Description:    Add an Item class with name, description, and quantity Field/Property pairs
-				Refactor Backpack property to be a list of Items
-				Refactor 
+				Refactor Backpack property to be a list of Items throughout the application
+				Refactor the DisplayGetPlayerBackpackItems method to handle the Item objects

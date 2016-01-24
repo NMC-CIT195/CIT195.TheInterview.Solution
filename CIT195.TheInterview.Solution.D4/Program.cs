@@ -391,7 +391,6 @@ namespace CIT195.TheInterview.Solution
         {
             bool done = false;
             bool addNewItem;
-            string userResponse;
 
             DisplayNewScreenHeader();
 
@@ -405,30 +404,51 @@ namespace CIT195.TheInterview.Solution
             //
             while (!done)
             {
-                Console.Write("Would you like to add an item to your backpack (Yes or No)");
+                Console.Write(" Would you like to add an item to your backpack (Yes or No)");
                 addNewItem = GetYesNoFromConsole();
+                Console.WriteLine();
 
+                //
+                // Player would like an item added
+                //
                 if (addNewItem)
                 {
+                    //
+                    // Instantiate a temporary item to hold the player's responses
+                    //
                     Item newItem = new Item();
 
+                    //
+                    // Query player for item info
+                    //
                     Console.Write(" Please enter an item name:");
                     newItem.Name = Console.ReadLine();
 
                     Console.Write(" Please enter the item's description:");
                     newItem.Description = Console.ReadLine();
 
-                    newItem.Count = GetIntegerFromConsole(" Please enter the number you will carry:", 1, 50);
+                    Console.Write(" Please enter the number you will carry:");
+                    newItem.Count = GetIntegerFromConsole("number of items", 1, 50);
 
+                    Console.WriteLine();
+
+                    //
+                    // Add new item to the backpack list
+                    //
                     myPlayer.Backpack.Add(newItem);
+
+                    //
+                    // set newItem to null to free memory
+                    //
+                    newItem = null;
                 }
+                //
+                // Player is done adding items
+                //
                 else
                 {
                     done = true;
                 }
-
-
-
             }
 
             Console.WriteLine();
@@ -439,10 +459,13 @@ namespace CIT195.TheInterview.Solution
             if (myPlayer.Backpack.Count != 0)
             {
                 Console.WriteLine(" You have entered the following items in your backpack.");
+                Console.WriteLine();
 
-                foreach (string item in myPlayer.Backpack)
+                foreach (Item item in myPlayer.Backpack)
                 {
-                    Console.WriteLine(" Item: {0}", item);
+                    Console.WriteLine(" Item Name, Count: {0}, {1} units", item.Name, item.Count);
+                    Console.WriteLine(" Item Description: {0}", item.Description);
+                    Console.WriteLine();
                 }
             }
             // no items in the backpack
@@ -507,9 +530,9 @@ namespace CIT195.TheInterview.Solution
             //
             if (myPlayer.Backpack.Count != 0)
             {
-                foreach (string item in myPlayer.Backpack)
+                foreach (Item item in myPlayer.Backpack)
                 {
-                    backpackList += item + " ";
+                    backpackList += item.Name + " ";
                 }
             }
             // backpack empty
