@@ -19,3 +19,8 @@ Description:    Include Console Helper Utilities: GetIntegerFromConsole
 				Add methods DisplayGetPlayersWeapons and DisplayGetPlayerBackpackItems
 				Update DisplaySummary method to include weapons and backpack items
 				Refactor user integer input into the GetIntegerFromConsole method
+
+Project:        D4
+Description:    Add an Item class with name, description, and quantity Field/Property pairs
+				Refactor Backpack property to be a list of Items
+				Refactor 
